@@ -6,6 +6,10 @@ import VideoDetail from './VideoDetail';
 
 class App extends Component {
 	state = { videos: [], selectedVideo: null };
+
+	componentDidMount() {
+		this.onTermSubmit('focus music');
+	}
 	onTermSubmit = async (term) => {
 		const KEY = process.env.REACT_APP_YOUTUBE_API_KEY;
 		const response = await youtube.get('./search', {
@@ -16,7 +20,10 @@ class App extends Component {
 				key: KEY,
 			},
 		});
-		this.setState({ videos: response.data.items });
+		this.setState({
+			videos: response.data.items,
+			selectedVideo: response.data.items[0],
+		});
 	};
 
 	onVideoSelect = (video) => {
